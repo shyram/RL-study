@@ -35,7 +35,13 @@ Done: agnet가 Goal, Hole에 도착할 때 True를 반환하고 다른 타일에
 ## TODO
 
 - [x] Dynamic Programming - Policy Iteration, Value Iteration
-- [ ] Monte Calro prediction
+- [x] Monte Calro prediction
+- [ ] Temporal Difference prediction
+- [ ] SARSA
+- [ ] Q-Learning
+- [ ] On-policy vs Off-policy
+
+
 
 
 
