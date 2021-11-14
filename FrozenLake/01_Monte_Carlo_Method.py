@@ -276,9 +276,9 @@ for i in range(env.nS):
 # - 그림과 함께 설명 추가
 # - Dynamic Programming의 Policy iteration과 어떤 차이가 있는지
 # - epsilon greedy 방법 설명 (탐험)
-
-
-
-
-
-
+#
+# 설명 추가
+# - Q function 사용
+# - epsilon greedy
+# - value iteration 차용
+# - GILE: Greedy in the Limit Infinite Exploration
