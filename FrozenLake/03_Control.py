@@ -62,6 +62,7 @@ for i in range(1, 100001):
             Q[state, action] = (1 - alpha) * Q[state, action] + alpha * (reward + gamma * Q[next_state, next_action]) # SARSA
         
         state = next_state
+        action = next_action
         
     if i % 100 == 0:
         clear_output(wait=True)
