@@ -163,25 +163,32 @@ epi_reward = 0
 
 for i in range(1, 20001):
     state = env.reset()
+    ds = discretize_state(state, space_list)
     done = False
-
+    tr = 0
+    
+    epsilon -= (0.5 / 20000)
+    
     while not done:
+        tr += 1
+        
         if random.uniform(0, 1) < epsilon:
             action = env.action_space.sample()
         else:
             action = np.argmax(Q[ds])
         
         next_state, reward, done, info = env.step(action)
-        ds = discretize_state(state, space_list)
+        nds = discretize_state(next_state, space_list)
     
         epi_reward += reward
         
-#        if done:
-#            reward = -500
+        if done and tr < 300:
+            reward = -500
         
-        Q[ds][action] = (1 - alpha) * Q[ds][action] + alpha * (reward + gamma * np.max(Q[ds]))
+        Q[ds][action] = (1 - alpha) * Q[ds][action] + alpha * (reward + gamma * np.max(Q[nds]))
         
         state = next_state
+        ds = nds
         
     if i % 1000 == 0:
         clear_output(wait=True)
@@ -193,9 +200,6 @@ for i in range(1, 20001):
         epi_reward = 0
         
 print('학습 완료')
-# -
-
-test2(Q)
 
 # +
 x = np.linspace(1000, 20000, 20)
