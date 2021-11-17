@@ -39,8 +39,7 @@ Done: agnet가 Goal, Hole에 도착할 때 True를 반환하고 다른 타일에
 - [x] Temporal Difference prediction
 - [x] SARSA
 - [x] Q-Learning
-
-
+- [ ] Double Q-Learning
 
 
 
