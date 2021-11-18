@@ -22,8 +22,7 @@
 #
 # Time-step 마다 학습하면서 model free한 방법인 TD에 대한 기본적인 아이디어를 익히고 실습코드를 작성해보자.
 #
-# > TODO: 
-# > TD에 대한 설명 추가 + 수식 추가
+# ![image.png](attachment:image.png)
 
 # ## Library Import
 
@@ -33,20 +32,19 @@ import random
 from IPython.display import clear_output
 
 
-# TD prediction for value function
+# ## TD prediction for state value function
 
 def TD_prediction(env, alpha = 0.01, gamma = 1):
     V = np.zeros(env.nS)
     
-    for i in range(20000):
+    for i in range(1, 20001):
         state = env.reset()
-        epochs, reward = 0, 0
+        reward = 0
         done = False
-        action = env.action_space.sample()
         
         while not done:
+            action = env.action_space.sample()
             next_state, reward, done, info = env.step(action)
-            next_action = env.action_space.sample()
             
             if done:
                 V[state] = (1 - alpha) * V[state] + alpha * reward
@@ -54,8 +52,6 @@ def TD_prediction(env, alpha = 0.01, gamma = 1):
                 V[state] = (1 - alpha) * V[state] + alpha * (reward + gamma * V[next_state])
                 
             state = next_state
-            action = next_action
-            epochs += 1
             
         if i % 100 == 0:
             clear_output(wait=True)
@@ -75,14 +71,14 @@ print(V)
 
 # -
 
-# TD prediction for Q-function
+# ## TD prediction for Q-function
 
 def TD_Q_prediction(env, alpha = 0.01, gamma = 1):
     Q = np.zeros([env.nS, env.nA])
     
-    for i in range(300000):
+    for i in range(1, 300001):
         state = env.reset()
-        epochs, reward = 0, 0
+        reward = 0, 0
         done = False
         action = env.action_space.sample()
         
@@ -97,7 +93,6 @@ def TD_Q_prediction(env, alpha = 0.01, gamma = 1):
                 
             state = next_state
             action = next_action
-            epochs += 1
             
         if i % 100 == 0:
             clear_output(wait = True)

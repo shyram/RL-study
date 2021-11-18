@@ -156,7 +156,7 @@ env = gym.make('CartPole-v1')
 Q = np.zeros([bins[0], bins[1], bins[2], bins[3], 2])
 alpha = 0.1
 gamma = 0.99
-epsilon = 0.5
+epsilon = 0.1
 
 all_reward = []
 epi_reward = 0
@@ -167,7 +167,7 @@ for i in range(1, 20001):
     done = False
     tr = 0
     
-    epsilon -= (0.5 / 20000)
+    #epsilon -= (0.5 / 20000)
     
     while not done:
         tr += 1
@@ -195,7 +195,7 @@ for i in range(1, 20001):
         print('Episode:', i)
         print('sum of reward:', epi_reward)
         #test(Q)
-        #test2(Q)
+        test2(Q)
         all_reward.append(epi_reward)
         epi_reward = 0
         

@@ -29,6 +29,8 @@ from IPython.display import clear_output
 #
 # - On Policy: episode를 진행할때 사용하는 policy와 학습이 진행되는 policy가 동일하다.
 # - $\varepsilon$-greedy
+#
+# ![image.png](attachment:image.png)
 
 env = gym.make('FrozenLake-v1', is_slippery=True)
 env.render()
@@ -98,6 +100,8 @@ while not done:
 # 즉, update할 t 시점의 action을 $\varepsilon$-greedy를 통해 선택하고, 해당 action을 update하기 위해선 next state의 action들 중에 argmax한 action을 가져와 update한다.  
 #
 # 이렇게 하면 update할 Q값을 $\varepsilon$-greedy policy를 통해 선택하고, 해당 action을 update하기 위해 greedy policy 를 통해 Q값을 선택하게 되어, 두 policy를 분리하여 학습할 수 있다.
+#
+# ![image.png](attachment:image.png)
 
 env = gym.make('FrozenLake-v1', is_slippery=True)
 env.render()

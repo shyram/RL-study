@@ -16,9 +16,21 @@
 
 # # FrozenLake-v1 환경을 통한 Monte Carlo Method 실습
 #
-# # ToDo: MC에 대한 설명 추가
+#
+# ### Sampling
+#
 # - sampling을 통해 추정(approximate)한다.
-# - 수식 추가
+#
+# ![image-2.png](attachment:image-2.png)
+#
+#
+#
+# ### MC prediction
+#
+# - 모든 episode 진행하면서 맨 뒤 state부터 돌아오며 value function update
+#
+# ![image.png](attachment:image.png)
+# ![image-3.png](attachment:image-3.png)
 
 # ## Library Import
 
@@ -60,9 +72,10 @@ def generate_episode(env, policy):
     return states, actions, rewards
 
 
-# **몇번의 episode가 있어야 goal에 도달하는 episode를 얻을 수 있을까?**
+# **몇번의 episode가 있어야 goal에 도달하는 episode를 얻을 수 있을까? = 처음으로 reward 1을 얻게 되는 시점은??**
 #
 # - policy probability가 동일한 random policy에서 시뮬레이션해보자.
+# - 물론 매번 달라짐(확률적으로 발생하는 것이라..)
 
 # +
 env = gym.make('FrozenLake-v1')
@@ -86,7 +99,9 @@ print('rewards:', rewards)
 
 # -
 
-# # Monte Carlo predictino for Value function
+# # Monte Carlo prediction for State Value function
+#
+# ![image.png](attachment:image.png)
 
 # ## Every-visit MC prediction
 #
@@ -94,7 +109,7 @@ print('rewards:', rewards)
 
 def every_visit_MC_prediction(env, policy, n_sample, gamma = 1.0):
     
-    # 특정 state를 방문한 횟수
+    # 특정 state를 방문한 횟수 = 평균값을 구하기 위해
     N = np.zeros(env.nS)
     
     # state value function
@@ -142,9 +157,9 @@ def first_visit_MC_prediction(env, policy, n_sample, gamma = 1.0):
     
     N = np.zeros(env.nS)
     V = np.zeros(env.nS)
-    visit = np.zeros(env.nS, dtype=int) - 1
+    visit = np.zeros(env.nS, dtype=int)
     
-    for i in range(n_sample):
+    for i in range(1, n_sample + 1):
         states, actions, rewards = generate_episode(env, policy)
         
         G = 0
@@ -183,7 +198,7 @@ for i in range(env.nS):
     print('{:.4f} {:.4f}'.format(every_visit_Value_function[i], first_visit_Value_function[i]))
 
 
-# # Monte Carlo predictino for Q-function
+# # Monte Carlo prediction for Q-function
 
 # ## Every-visit MC prediction
 
@@ -230,8 +245,8 @@ print(every_visit_Q)
 def first_visit_MC_Q_prediction(env, policy, n_sample, gamma = 1.0):
     N = np.zeros([env.nS, env.nA])
     Q = np.zeros([env.nS, env.nA])
-    visit = np.zeros([env.nS, env.nA], dtype='int') - 1
-    for i in range(n_sample):
+    visit = np.zeros([env.nS, env.nA], dtype='int')
+    for i in range(1, n_sample + 1):
         states, actions, rewards = generate_episode(env, policy)
         
         G = 0
@@ -270,7 +285,7 @@ print(first_visit_Q)
 for i in range(env.nS):
     print('{}\n{}\n'.format(np.round(every_visit_Q[i], 4), np.round(first_visit_Q[i], 4)))
 
-# # Monte Calor Control with ${\varepsilon}$-Greedy
+# # Monte Carlo Control with ${\varepsilon}$-Greedy
 #
 # ## TODO
 # - 그림과 함께 설명 추가

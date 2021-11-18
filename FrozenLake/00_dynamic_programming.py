@@ -173,8 +173,6 @@ for state in range(env.nS):
 # The optimal Q-Bellman update
 #
 # ![image.png](attachment:image.png)
-#
-# $Q_k$는 k가 무한으로 갈 때, $Q_{\pi}$로 수렴한다.
 
 def Q_value_iteration(env, discount_factor=1.0, theta=0.00001):
     
@@ -194,6 +192,7 @@ def Q_value_iteration(env, discount_factor=1.0, theta=0.00001):
                 # Backup
                 for  transition_prob, next_state, reward, done in env.P[state][action]:
                     q[action] = q[action] + transition_prob * (reward + discount_factor * np.max(Q[next_state]))
+                    
                 delta = max(delta, np.abs(q[action] - Q[state][action]))
                 
             for i in range(env.nA):
@@ -301,6 +300,13 @@ env = gym.make('FrozenLake-v1', is_slippery=True)
 optimal_policy = policy_iteration(env, discount_factor=0.9).astype(int)
 optimal_policy = optimal_policy.astype(int)
 print(optimal_policy.reshape(4,4))
+
+print()
+direct = ['Left', 'Down', 'Right', 'Up']
+for i in range(4):
+    for j in range(4):
+        print(direct[optimal_policy.reshape(4,4)[i][j]], end='\t')
+    print()
 
 done = False
 state = env.reset()

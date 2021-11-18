@@ -45,6 +45,8 @@ class Cliff:
     
     def render(self):
         print('TODO')
+        
+        for i in range()
     
     def step(self, action):
         # [Left, Down, Right, Up] = [0, 1, 2, 3]
